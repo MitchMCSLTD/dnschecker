@@ -1,83 +1,90 @@
-# React + Vite + Hono + Cloudflare Workers
+# Email DNS Checker
 
-[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/templates/tree/main/vite-react-template)
+A powerful web application that helps you verify and validate email-related DNS records for any domain. This tool checks SPF, DKIM, and DMARC records to ensure your email configuration is secure and properly set up.
 
-This template provides a minimal setup for building a React application with TypeScript and Vite, designed to run on Cloudflare Workers. It features hot module replacement, ESLint integration, and the flexibility of Workers deployments.
+![Email DNS Checker](https://imagedelivery.net/wSMYJvS3Xw-n339CbDyDIA/fc7b4b62-442b-4769-641b-ad4422d74300/public)
 
-![React + TypeScript + Vite + Cloudflare Workers](https://imagedelivery.net/wSMYJvS3Xw-n339CbDyDIA/fc7b4b62-442b-4769-641b-ad4422d74300/public)
+## 🌟 Features
 
-<!-- dash-content-start -->
+- **SPF Record Validation**: Checks if your Sender Policy Framework (SPF) record is properly configured
+- **DKIM Record Verification**: Validates DomainKeys Identified Mail (DKIM) record setup
+- **DMARC Record Analysis**: Ensures Domain-based Message Authentication, Reporting, and Conformance (DMARC) is correctly implemented
+- **Real-time Results**: Instant feedback on your domain's email security configuration
+- **Detailed Recommendations**: Provides actionable suggestions for improving your email security setup
 
-🚀 Supercharge your web development with this powerful stack:
+## 🚀 Getting Started
 
-- [**React**](https://react.dev/) - A modern UI library for building interactive interfaces
-- [**Vite**](https://vite.dev/) - Lightning-fast build tooling and development server
-- [**Hono**](https://hono.dev/) - Ultralight, modern backend framework
-- [**Cloudflare Workers**](https://developers.cloudflare.com/workers/) - Edge computing platform for global deployment
+### Prerequisites
 
-### ✨ Key Features
+- Node.js (v16 or higher)
+- npm or yarn
+- Cloudflare account (for deployment)
 
-- 🔥 Hot Module Replacement (HMR) for rapid development
-- 📦 TypeScript support out of the box
-- 🛠️ ESLint configuration included
-- ⚡ Zero-config deployment to Cloudflare's global network
-- 🎯 API routes with Hono's elegant routing
-- 🔄 Full-stack development setup
+### Installation
 
-Get started in minutes with local development or deploy directly via the Cloudflare dashboard. Perfect for building modern, performant web applications at the edge.
-
-<!-- dash-content-end -->
-
-## Getting Started
-
-To start a new project with this template, run:
-
+1. Clone the repository:
 ```bash
-npm create cloudflare@latest -- --template=cloudflare/templates/vite-react-template
+git clone https://github.com/MitchMCSLTD/dnschecker.git
+cd dnschecker
 ```
 
-A live deployment of this template is available at:
-[https://react-vite-template.templates.workers.dev](https://react-vite-template.templates.workers.dev)
-
-## Development
-
-Install dependencies:
-
+2. Install dependencies:
 ```bash
 npm install
 ```
 
-Start the development server with:
-
+3. Start the development server:
 ```bash
 npm run dev
 ```
 
-Your application will be available at [http://localhost:5173](http://localhost:5173).
+The application will be available at [http://localhost:5173](http://localhost:5173)
 
-## Production
+## 💻 Usage
 
-Build your project for production:
+1. Enter a domain name in the input field (e.g., example.com)
+2. Click "Check DNS" to analyze the domain's email-related DNS records
+3. Review the results for SPF, DKIM, and DMARC configurations
+4. Follow the recommendations to improve your email security setup
+
+## 🛠️ Development
+
+### Building for Production
 
 ```bash
 npm run build
 ```
 
-Preview your build locally:
+### Preview Production Build
 
 ```bash
 npm run preview
 ```
 
-Deploy your project to Cloudflare Workers:
+### Deploy to Cloudflare Workers
 
 ```bash
 npm run build && npm run deploy
 ```
 
-## Additional Resources
+## 🔧 Technical Stack
+
+- **Frontend**: React + TypeScript + Vite
+- **Backend**: Cloudflare Workers + Hono
+- **Styling**: CSS Modules
+- **Deployment**: Cloudflare Workers
+
+## 📚 Additional Resources
 
 - [Cloudflare Workers Documentation](https://developers.cloudflare.com/workers/)
-- [Vite Documentation](https://vitejs.dev/guide/)
-- [React Documentation](https://reactjs.org/)
-- [Hono Documentation](https://hono.dev/)
+- [SPF Record Documentation](https://www.cloudflare.com/learning/dns/dns-records/dns-spf-record/)
+- [DKIM Documentation](https://www.cloudflare.com/learning/dns/dns-records/dns-dkim-record/)
+- [DMARC Documentation](https://www.cloudflare.com/learning/dns/dns-records/dns-dmarc-record/)
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## 📝 License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
