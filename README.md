@@ -2,7 +2,7 @@
 
 A powerful web application that helps you verify and validate email-related DNS records for any domain. This tool checks SPF, DKIM, and DMARC records to ensure your email configuration is secure and properly set up.
 
-![Email DNS Checker](https://imagedelivery.net/wSMYJvS3Xw-n339CbDyDIA/fc7b4b62-442b-4769-641b-ad4422d74300/public)
+![Email DNS Checker]
 
 ## 🌟 Features
 
