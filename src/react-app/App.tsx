@@ -1,12 +1,9 @@
 // src/App.tsx
 
 import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
-import cloudflareLogo from "./assets/Cloudflare_Logo.svg";
-import honoLogo from "./assets/hono.svg";
 import "./App.css";
 import { DNSCheckResult, RecordResult } from "./types";
+import mcsltdLogo from './assets/mcsltd-logo.png';
 
 function App() {
   const [domain, setDomain] = useState("");
@@ -25,7 +22,8 @@ function App() {
         body: JSON.stringify({ domain }),
       });
       if (!response.ok) {
-        throw new Error("Failed to check domain");
+        const errorData = await response.json();
+        throw new Error(errorData.error || "Failed to check domain");
       }
       const data: DNSCheckResult = await response.json();
       setResults(data);
@@ -51,7 +49,9 @@ function App() {
 
   return (
     <div className="App">
+      <img src={mcsltdLogo} alt="MCSLTD Logo" style={{ width: '50%' }} />
       <h1>Email DNS Checker</h1>
+      <p>Email authentication technologies like SPF, DKIM, and DMARC are crucial for protecting your domain from email spoofing, phishing, and spam. They help ensure that emails sent from your domain are legitimate and that receiving mail servers can verify their authenticity. Implementing these records enhances your email deliverability and builds trust with recipients.</p>
       <div>
         <input
           type="text"
