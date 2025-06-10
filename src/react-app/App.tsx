@@ -6,60 +6,82 @@ import viteLogo from "/vite.svg";
 import cloudflareLogo from "./assets/Cloudflare_Logo.svg";
 import honoLogo from "./assets/hono.svg";
 import "./App.css";
+import { DNSCheckResult, RecordResult } from "./types";
 
 function App() {
-  const [count, setCount] = useState(0);
-  const [name, setName] = useState("unknown");
+  const [domain, setDomain] = useState("");
+  const [results, setResults] = useState<DNSCheckResult | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const handleCheck = async () => {
+    if (!domain) return;
+    setLoading(true);
+    setError(null);
+    try {
+      const response = await fetch("/api/check-domain", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ domain }),
+      });
+      if (!response.ok) {
+        throw new Error("Failed to check domain");
+      }
+      const data: DNSCheckResult = await response.json();
+      setResults(data);
+    } catch (err: any) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const getStatusStyle = (status: RecordResult['status']) => {
+    switch (status) {
+      case "pass":
+        return { backgroundColor: "#10B981", color: "white", padding: "4px 8px", borderRadius: "4px" }; // Green
+      case "fail":
+        return { backgroundColor: "#EF4444", color: "white", padding: "4px 8px", borderRadius: "4px" }; // Red
+      case "warning":
+        return { backgroundColor: "#F59E0B", color: "white", padding: "4px 8px", borderRadius: "4px" }; // Yellow/Orange
+      default:
+        return {};
+    }
+  };
 
   return (
-    <>
+    <div className="App">
+      <h1>Email DNS Checker</h1>
       <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-        <a href="https://hono.dev/" target="_blank">
-          <img src={honoLogo} className="logo cloudflare" alt="Hono logo" />
-        </a>
-        <a href="https://workers.cloudflare.com/" target="_blank">
-          <img
-            src={cloudflareLogo}
-            className="logo cloudflare"
-            alt="Cloudflare logo"
-          />
-        </a>
-      </div>
-      <h1>Vite + React + Hono + Cloudflare</h1>
-      <div className="card">
-        <button
-          onClick={() => setCount((count) => count + 1)}
-          aria-label="increment"
-        >
-          count is {count}
+        <input
+          type="text"
+          value={domain}
+          onChange={(e) => setDomain(e.target.value)}
+          placeholder="Enter domain (e.g., example.com)"
+        />
+        <button onClick={handleCheck} disabled={loading}>
+          {loading ? "Checking..." : "Check DNS"}
         </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
       </div>
-      <div className="card">
-        <button
-          onClick={() => {
-            fetch("/api/")
-              .then((res) => res.json() as Promise<{ name: string }>)
-              .then((data) => setName(data.name));
-          }}
-          aria-label="get name"
-        >
-          Name from API is: {name}
-        </button>
-        <p>
-          Edit <code>worker/index.ts</code> to change the name
-        </p>
-      </div>
-      <p className="read-the-docs">Click on the logos to learn more</p>
-    </>
+      {error && <p className="error">{error}</p>}
+      {results && (
+        <div className="results">
+          <h2>Results for {results.domain}</h2>
+          <h3>SPF</h3>
+          <p>Status: <span style={getStatusStyle(results.spf.status)}>{results.spf.status}</span></p>
+          <p>Record: {results.spf.record || "N/A"}</p>
+          <p>Recommendation: {results.spf.recommendation}</p>
+          <h3>DKIM</h3>
+          <p>Status: <span style={getStatusStyle(results.dkim.status)}>{results.dkim.status}</span></p>
+          <p>Record: {results.dkim.record || "N/A"}</p>
+          <p>Recommendation: {results.dkim.recommendation}</p>
+          <h3>DMARC</h3>
+          <p>Status: <span style={getStatusStyle(results.dmarc.status)}>{results.dmarc.status}</span></p>
+          <p>Record: {results.dmarc.record || "N/A"}</p>
+          <p>Recommendation: {results.dmarc.recommendation}</p>
+        </div>
+      )}
+    </div>
   );
 }
 
