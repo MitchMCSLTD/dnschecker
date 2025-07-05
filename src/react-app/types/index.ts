@@ -3,6 +3,7 @@ export interface DNSCheckResult {
   spf: RecordResult;
   dkim: RecordResult;
   dmarc: RecordResult;
+  m365?: boolean;
 }
 
 export interface RecordResult {

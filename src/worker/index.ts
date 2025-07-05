@@ -2,9 +2,9 @@ import { Hono } from "hono";
 import { checkDomainHandler } from "./checkDomainHandler";
 
 // Basic in-memory rate limiter for demonstration purposes
-const LIMIT = 3; // Max 3 requests
+const LIMIT = 5; // Max 5 requests
 const WINDOW_MS = 30 * 60 * 1000; // in 30 minutes
-const ipRequestCounts = new Map<string, { count: number; timer: NodeJS.Timeout }>();
+const ipRequestCounts = new Map<string, { count: number; timer: ReturnType<typeof setTimeout> }>();
 
 const rateLimitMiddleware = async (c: any, next: any) => {
   const ip = c.req.raw.headers.get("CF-Connecting-IP") || "unknown";

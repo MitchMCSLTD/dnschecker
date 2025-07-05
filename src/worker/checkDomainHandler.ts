@@ -213,5 +213,14 @@ export async function checkDomainHandler(c: Context) {
     dkim.record = `${dkim.record.substring(0, truncationLength)}...${dkim.record.substring(dkim.record.length - truncationLength)}`;
   }
 
-  return c.json({ domain, spf, dkim, dmarc });
+  // M365 detection logic
+  let m365 = false;
+  if (
+    (spf.record && spf.record.includes('include:spf.protection.outlook.com')) ||
+    (dkim.record && dkim.record.includes('domainkey.microsoft.com'))
+  ) {
+    m365 = true;
+  }
+
+  return c.json({ domain, spf, dkim, dmarc, m365 });
 } 
